@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+//alap útvonalak
+Route::get('/api/books', [BookController::class, 'index']);
+Route::get('/api/books/{id}', [BookController::class, 'show']);
+Route::delete('/api/books/{id}', [BookController::class, 'destroy']);
+Route::post('/api/books', [BookController::class, 'store']);
+Route::put('/api/books/{id}', [BookController::class, 'update']);
+//Route::patch('/api/books/{id}', [BookController::class, 'update']);
+
+//view útvonalak
+Route::get('/book/list', [BookController::class, 'listView']);
