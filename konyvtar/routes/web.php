@@ -32,11 +32,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::apiResource('/api/copies', CopyController::class);
+
 Route::apiResource('/api/books', BookController::class);
 Route::apiResource('/api/users', UserController::class);
+Route::patch('api/password_modify/{id}', [UserController::class, 'updatePassword']);
 Route::get('/api/lendings', [LendingController::class, 'index']);
 Route::get('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']);
 Route::post('/api/lendings', [LendingController::class, 'store']);
+
+//admin útvonalak
+Route::middleware( ['admin'])->group(function () {
+    Route::apiResource('/api/copies', CopyController::class);
+});
+
 
 require __DIR__.'/auth.php';

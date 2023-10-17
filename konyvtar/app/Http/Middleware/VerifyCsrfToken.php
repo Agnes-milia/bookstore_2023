@@ -15,6 +15,7 @@ class VerifyCsrfToken extends Middleware
         '/api/books/*',
         '/api/books',
         'api/lendings',
-        'api/lendings/*/*/*'
+        'api/lendings/*/*/*',
+        '/api/password_modify/*'
     ];
 }
