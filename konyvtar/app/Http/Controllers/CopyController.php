@@ -36,4 +36,10 @@ class CopyController extends Controller
         $copy->status = $request->status;
         $copy->save();
     }
+
+    public function bookCopyLending() {
+        $copies = Copy::with('book')->with('lending')->get();
+        return $copies;
+    }
+
 }

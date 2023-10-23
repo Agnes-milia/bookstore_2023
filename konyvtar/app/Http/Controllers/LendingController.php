@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Lending;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LendingController extends Controller
 {
@@ -31,4 +32,16 @@ class LendingController extends Controller
         $lending->save();
     }
 
+    public function lendingsByUser(){
+        $user = Auth::user();	//bejelentkezett felhasználó
+        $lendings = Lending::with('user')->where('user_id','=',$user->id)->get();
+        return $lendings;
+    }
+
+    public function lendingsCountByUser()
+    {
+        $user = Auth::user();	//bejelentkezett felhasználó
+        $lendings = Lending::with('user')->where('user_id','=', $user->id)->distinct('copy_id')->count();
+        return $lendings;
+    }
 }

@@ -16,4 +16,10 @@ class Book extends Model
         'title',
         
     ];
+
+    //kapcsolati függvények
+    public function copy()
+    {    return $this->hasMany(Copy::class, 'book_id', 'book_id');   
+        //sorrend: osztály, ott hogy hívják, itt hogy hívják
+    }
 }

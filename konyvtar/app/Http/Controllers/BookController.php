@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Copy;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -46,5 +47,17 @@ class BookController extends Controller
 
     public function newView(){
         return view('book.new');
+    }
+
+    //with függvényekkel
+    public function bookCopy(){
+        $copies = Book::with('copy')->get();
+        return $copies;
+    }
+
+    public function bookCopies($title)
+    {	
+        $copies = Book::with('copy')->where('title','=', $title)->get();
+        return $copies;
     }
 }

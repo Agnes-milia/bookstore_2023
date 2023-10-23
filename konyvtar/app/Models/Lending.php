@@ -25,4 +25,8 @@ class Lending extends Model
         return $query;
     }
 
+    //with fg-hez
+    public function user()
+    {  return $this->belongsTo(User::class, 'id', 'user_id');   }
+
 }
