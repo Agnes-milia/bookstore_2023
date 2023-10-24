@@ -42,10 +42,11 @@ Route::middleware( ['admin'])->group(function () {
 Route::middleware( ['auth.basic'])->group(function () {
     Route::apiResource('/api/books', BookController::class);
     Route::apiResource('/api/users', UserController::class);
-    Route::patch('api/password_modify/{id}', [UserController::class, 'updatePassword']);
+    
     Route::get('/api/lendings', [LendingController::class, 'index']);
     Route::get('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']);
     Route::post('/api/lendings', [LendingController::class, 'store']);
+    
     //with fg-ek
     Route::get('/with/copies', [BookController::class, 'bookCopy']);
     Route::get('/with/user_lendings', [LendingController::class, 'lendingsByUser']);
@@ -55,5 +56,6 @@ Route::middleware( ['auth.basic'])->group(function () {
 });
 
 //bejelentkezés nélkül - nem kell group
+Route::patch('api/password_modify/{id}', [UserController::class, 'updatePassword']);
 
 require __DIR__.'/auth.php';
