@@ -46,8 +46,8 @@ Route::middleware( ['auth.basic'])->group(function () {
     Route::get('/api/lendings', [LendingController::class, 'index']);
     Route::get('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']);
     Route::post('/api/lendings', [LendingController::class, 'store']);
-    //with fg-ek
     
+    //with fg-ek
     Route::get('/with/user_lendings', [LendingController::class, 'lendingsByUser']);
     Route::get('/with/book_copy_lendings', [CopyController::class, 'bookCopyLending']);
     Route::get('/with/lendings_count_user', [LendingController::class, 'lendingsCountByUser']);
@@ -57,4 +57,6 @@ Route::middleware( ['auth.basic'])->group(function () {
 //bejelentkezés nélkül - nem kell group
 Route::get('/with/copies', [BookController::class, 'bookCopy']);
 Route::apiResource('/api/copies', CopyController::class);
+
+
 require __DIR__.'/auth.php';

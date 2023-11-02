@@ -51,6 +51,7 @@ class BookController extends Controller
 
     //with függvényekkel
     public function bookCopy(){
+        //a copy a függvény neve!
         $copies = Book::with('copy')->get();
         return $copies;
     }
