@@ -16,4 +16,11 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_get_routes(): void
+    {
+        $response = $this->get('/api/copies');
+
+        $response->assertStatus(200);
+    }
 }
