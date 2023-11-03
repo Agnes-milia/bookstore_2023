@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
     public function index(){
-        return User::all();
+        return User::simplePaginate(5);
     }
 
     public function show($id){

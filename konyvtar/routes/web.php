@@ -40,8 +40,8 @@ Route::middleware( ['admin'])->group(function () {
 
 //basic útvonalak
 Route::middleware( ['auth.basic'])->group(function () {
-    Route::apiResource('/api/books', BookController::class);
     Route::apiResource('/api/users', UserController::class);
+    
     Route::patch('api/password_modify/{id}', [UserController::class, 'updatePassword']);
     Route::get('/api/lendings', [LendingController::class, 'index']);
     Route::get('/api/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']);
@@ -57,6 +57,7 @@ Route::middleware( ['auth.basic'])->group(function () {
 //bejelentkezés nélkül - nem kell group
 Route::get('/with/copies', [BookController::class, 'bookCopy']);
 Route::apiResource('/api/copies', CopyController::class);
+Route::apiResource('/api/books', BookController::class);
 
 
 require __DIR__.'/auth.php';
