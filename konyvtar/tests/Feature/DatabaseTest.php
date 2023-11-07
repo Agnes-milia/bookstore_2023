@@ -9,12 +9,14 @@ use Tests\TestCase;
 
 class DatabaseTest extends TestCase
 {
+    //minden teszt után az adatbázis visszaáll az eredeti állapotába:
     use RefreshDatabase;
 
-    public function test_user_database(): void
+    public function test_user_database()
     {
         User::factory()->count(3)->create();
-        $this->assertDatabaseCount("users", 5);
+        //eredetileg van az adatbázisban 2 user
+        $this->assertDatabaseCount('users', 5);
         $this->assertDatabaseHas('users', [
             'email' => 'konyvtaros@gmail.com',
         ]);
@@ -22,5 +24,5 @@ class DatabaseTest extends TestCase
             'email' => 'sally@example.com',
         ]);
     }
-    
 }
+
