@@ -32,6 +32,14 @@ class LendingController extends Controller
         $lending->save();
     }
 
+    public function update(Request $request){
+        $lending = new Lending();
+        //csak patch!!
+        $lending->notice = $request->notice;
+        $lending->end = $request->end;
+        $lending->save();
+    }
+
     public function lendingsByUser(){
         $user = Auth::user();	//bejelentkezett felhasználó
         $lendings = Lending::with('user')->where('user_id','=',$user->id)->get();

@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lending extends Model
+class Reservation extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'user_id',
-        'copy_id',
+        'book_id',
         'start',
-        'end',
-        'notice'
+        'message'
     ];
 
     //létező fg felülírása
@@ -22,13 +20,8 @@ class Lending extends Model
     {
         $query
             ->where('user_id', '=', $this->getAttribute('user_id'))
-            ->where('copy_id', '=', $this->getAttribute('copy_id'))
+            ->where('book_id', '=', $this->getAttribute('book_id'))
             ->where('start', '=', $this->getAttribute('start'));
         return $query;
     }
-
-    //with fg-hez
-    public function user()
-    {  return $this->belongsTo(User::class, 'id', 'user_id');   }
-
 }
