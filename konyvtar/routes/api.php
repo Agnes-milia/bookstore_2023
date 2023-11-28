@@ -27,29 +27,35 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 //admin útvonalak
 Route::middleware( ['admin'])->group(function () {
-    
+    Route::delete('/users', [UserController::class, 'destroy']);
+    Route::get('/start_letters', [UserController::class, 'like']);
 });
 
 //basic útvonalak
 Route::middleware( ['auth.basic'])->group(function () {
-    Route::apiResource('/users', UserController::class);
+    
+    Route::apiResource('/users', UserController::class)->except('delete');
     Route::apiResource('/reservations', ReservationController::class)->except('put');
     Route::patch('/password_modify/{id}', [UserController::class, 'updatePassword']);
     Route::get('/lendings', [LendingController::class, 'index']);
     Route::get('/lendings/{user_id}/{copy_id}/{start}', [LendingController::class, 'show']);
     Route::post('/lendings', [LendingController::class, 'store']);
-    
+        
     //with fg-ek
     Route::get('/with/user_lendings', [LendingController::class, 'lendingsByUser']);
     Route::get('/with/book_copy_lendings', [CopyController::class, 'bookCopyLending']);
     Route::get('/with/lendings_count_user', [LendingController::class, 'lendingsCountByUser']);
     Route::get('/with/book_copies/{title}', [BookController::class, 'bookCopies']);
     Route::get('/with/user_lendings_res', [UserController::class, 'userLendingsReservations']);
+
+    //egyéb lekérdezések
+    Route::get('/more_lendings/{copy_id}/{db}', [CopyController::class, 'moreLendings']);
+    Route::patch('/lengthen/{copy_id}/{start}', [LendingController::class, 'lengthen']);
 });
 
 //bejelentkezés nélkül - nem kell group
 Route::get('/with/copies', [BookController::class, 'bookCopy']);
-Route::apiResource('/copies', CopyController::class);
+Route::apiResource('/copies', CopyController::class)->except('put');
 Route::apiResource('/books', BookController::class);
 //lekérdezések
 Route::get('book_publication/{book_id}', [BookController::class, 'bookPublication']);

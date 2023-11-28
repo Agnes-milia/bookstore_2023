@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lending;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class LendingController extends Controller
 {
@@ -29,6 +30,9 @@ class LendingController extends Controller
         $lending->user_id = $request->user_id;
         $lending->copy_id = $request->copy_id;
         $lending->start = $request->start;
+        $lending->notice = $request->notice;
+        $lending->extension = $request->extension;
+        $lending->end = $request->end;
         $lending->save();
     }
 
@@ -36,6 +40,7 @@ class LendingController extends Controller
         $lending = new Lending();
         //csak patch!!
         $lending->notice = $request->notice;
+        $lending->extension = $request->extension;
         $lending->end = $request->end;
         $lending->save();
     }
@@ -51,5 +56,15 @@ class LendingController extends Controller
         $user = Auth::user();	//bejelentkezett felhasználó
         $lendings = Lending::with('user')->where('user_id','=', $user->id)->distinct('copy_id')->count();
         return $lendings;
+    }
+
+    public function lengthen ($copy_id, $start)
+    {
+        $user = Auth::user();
+        DB::table('lendings as l')
+        ->where('copy_id', $copy_id)
+        ->where('user_id', $user->id)
+        ->where('start', $start)
+        ->update(['extension' => 1]);
     }
 }
